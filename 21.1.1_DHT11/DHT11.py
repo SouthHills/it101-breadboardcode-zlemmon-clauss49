@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-#############################################################################
-# Filename    : DHT11.py
-# Description :	read the temperature and humidity data of DHT11
-# Author      : freenove
-# modification: 2020/10/16
-########################################################################
+# Description :	Read the temperature and humidity data of DHT11
+
 import RPi.GPIO as GPIO
 import time
 import Freenove_DHT as DHT

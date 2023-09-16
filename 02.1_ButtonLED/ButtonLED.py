@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : ButtonLED.py
-# Description : Control led with button
-# auther      : www.freenove.com
-# modification: 2019/12/28
-########################################################################
+
 import RPi.GPIO as GPIO
 
 ledPin = 11    # define ledPin

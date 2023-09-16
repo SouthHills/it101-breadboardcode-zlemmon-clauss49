@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : ColorfulLED.py
-# Description : Random color change ColorfulLED
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 import random

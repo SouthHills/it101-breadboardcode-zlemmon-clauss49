@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : ADCDevice.py
-# Description : Freenove ADC Module library.
-# Author      : www.freenove.com
-# modification: 2020/04/21
-########################################################################
+# Description : ADC Module library.
 
 import smbus
 
@@ -48,5 +43,6 @@ class ADS7830(ADCDevice):
         self.address = 0x4b # 0x4b is the default i2c address for ADS7830 Module.   
         
     def analogRead(self, chn): # ADS7830 has 8 ADC input pins, chn:0,1,2,3,4,5,6,7
+        # Reads a byte of data from a hardware bus at a specific address using bitwise operations to construct the command to send based on the values of chn, self.cmd, and constants
         value = self.bus.read_byte_data(self.address, self.cmd|(((chn<<2 | chn>>1)&0x07)<<4))
         return value

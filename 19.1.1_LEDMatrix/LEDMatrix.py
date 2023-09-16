@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-#############################################################################
-# Filename    : LEDMatrix.py
 # Description : Control LEDMatrix with 74HC595
-# auther      : www.freenove.com
-# modification: 2019/12/28
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 
@@ -43,12 +39,12 @@ def setup():
     
 def shiftOut(dPin,cPin,order,val):
     for i in range(0,8):
-        GPIO.output(cPin,GPIO.LOW);
+        GPIO.output(cPin,GPIO.LOW)
         if(order == LSBFIRST):
             GPIO.output(dPin,(0x01&(val>>i)==0x01) and GPIO.HIGH or GPIO.LOW)
         elif(order == MSBFIRST):
             GPIO.output(dPin,(0x80&(val<<i)==0x80) and GPIO.HIGH or GPIO.LOW)
-        GPIO.output(cPin,GPIO.HIGH);
+        GPIO.output(cPin,GPIO.HIGH)
 
 def loop():
     while True:

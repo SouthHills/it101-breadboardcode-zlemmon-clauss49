@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : ADC.py
 # Description : Use ADC module to read the voltage value of potentiometer.
-# Author      : www.freenove.com
-# modification: 2020/03/06
-########################################################################
+
 import time
 from ADCDevice import *
 
@@ -19,7 +15,7 @@ def setup():
     else:
         print("No correct I2C address found, \n"
         "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
-        "Program Exit. \n");
+        "Program Exit. \n")
         exit(-1)
         
 def loop():

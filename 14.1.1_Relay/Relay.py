@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : Relay.py
 # Description : Control Relay and Motor via Button 
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 
@@ -29,7 +25,7 @@ def loop():
             lastChangeTime = round(time.time()*1000)
         if ((round(time.time()*1000) - lastChangeTime) > debounceTime):
             if reading != buttonState :
-                buttonState = reading;
+                buttonState = reading
                 if buttonState == GPIO.LOW:
                     print("Button is pressed!")
                     relayState = not relayState

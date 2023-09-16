@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : Sweep.py
 # Description : Servo sweep
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 OFFSE_DUTY = 0.5        #define pulse offset of servo

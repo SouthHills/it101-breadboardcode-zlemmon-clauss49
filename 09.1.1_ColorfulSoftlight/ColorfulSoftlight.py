@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-#############################################################################
-# Filename    : Softlight.py
 # Description : Control RGBLED with Potentiometer 
-# Author      : www.freenove.com
-# modification: 2020/03/09
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 from ADCDevice import *
@@ -23,7 +19,7 @@ def setup():
     else:
         print("No correct I2C address found, \n"
         "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
-        "Program Exit. \n");
+        "Program Exit. \n")
         exit(-1)
         
     global p_Red,p_Green,p_Blue

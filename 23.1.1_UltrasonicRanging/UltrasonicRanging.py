@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : UltrasonicRanging.py
 # Description : Get distance via UltrasonicRanging sensor
-# auther      : www.freenove.com
-# modification: 2019/12/28
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 
@@ -17,11 +13,11 @@ def pulseIn(pin,level,timeOut): # obtain pulse time of a pin under timeOut
     t0 = time.time()
     while(GPIO.input(pin) != level):
         if((time.time() - t0) > timeOut*0.000001):
-            return 0;
+            return 0
     t0 = time.time()
     while(GPIO.input(pin) == level):
         if((time.time() - t0) > timeOut*0.000001):
-            return 0;
+            return 0
     pulseTime = (time.time() - t0)*1000000
     return pulseTime
     

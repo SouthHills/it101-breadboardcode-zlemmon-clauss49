@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : I2CLCD1602.py
 # Description : Use the LCD display data
-# Author      : freenove
-# modification: 2018/08/03
-########################################################################
+
 from PCF8574 import PCF8574_GPIO
 from Adafruit_LCD1602 import Adafruit_CharLCD
 

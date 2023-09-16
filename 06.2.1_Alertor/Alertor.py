@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : Alertor.py
-# Description : Make Alertor with buzzer and button
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 import math
@@ -18,7 +13,7 @@ def setup():
     GPIO.setup(buzzerPin, GPIO.OUT)   # set RGBLED pins to OUTPUT mode
     GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)    # Set buttonPin to INPUT mode, and pull up to HIGH level, 3.3V
     p = GPIO.PWM(buzzerPin, 1) 
-    p.start(0);
+    p.start(0)
     
 def loop():
     while True:

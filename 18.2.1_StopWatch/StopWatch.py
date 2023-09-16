@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-#############################################################################
-# Filename    : StopWatch.py
 # Description : Control 4_Digit_7_Segment_Display with 74HC595
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
+
 import RPi.GPIO as GPIO
 import time
 import threading
@@ -29,7 +25,7 @@ def setup():
     
 def shiftOut(dPin,cPin,order,val):      
     for i in range(0,8):
-        GPIO.output(cPin,GPIO.LOW);
+        GPIO.output(cPin,GPIO.LOW)
         if(order == LSBFIRST):
             GPIO.output(dPin,(0x01&(val>>i)==0x01) and GPIO.HIGH or GPIO.LOW)
         elif(order == MSBFIRST):

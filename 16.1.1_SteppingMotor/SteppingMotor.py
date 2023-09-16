@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-########################################################################
-# Filename    : SteppingMotor.py
-# Description : Drive SteppingMotor
-# Author      : www.freenove.com
-# modification: 2019/12/27
-########################################################################
+# Description : Drive Stepping Motor
+
 import RPi.GPIO as GPIO
 import time 
 
