@@ -30,7 +30,6 @@ class PCF8591(ADCDevice):
         
     def analogRead(self, chn): # PCF8591 has 4 ADC input pins, chn:0,1,2,3
         value = self.bus.read_byte_data(self.address, self.cmd+chn)
-        value = self.bus.read_byte_data(self.address, self.cmd+chn)
         return value
     
     def analogWrite(self,value): # write DAC value
@@ -46,3 +45,19 @@ class ADS7830(ADCDevice):
         # Reads a byte of data from a hardware bus at a specific address using bitwise operations to construct the command to send based on the values of chn, self.cmd, and constants
         value = self.bus.read_byte_data(self.address, self.cmd|(((chn<<2 | chn>>1)&0x07)<<4))
         return value
+
+class GravitechADC(ADCDevice):
+    def __init__(self):
+        super(GravitechADC, self).__init__()
+        self.cmd = 0x84 #Use standard ADS command
+        self.address = 0x48 #Default address for Gravitech ADC (72)
+        
+    def analogRead(self, chn):
+        # Reads a byte of data from a hardware bus at a specific address using bitwise operations to construct the command to send based on the values of chn, self.cmd, and constants
+        value = self.bus.read_byte_data(self.address, self.cmd|(((chn<<2 | chn>>1)&0x07)<<4))
+        #Value can't be returned as is. Need to fetch MSB of 12-bit bus
+        msb = (value & 0xFF) << 4#FF is 16-bit mask. Shift 4 over to get 12
+        #LSB straight bussin'
+        lsb = (value & 0xF0) >> 4
+        #print("DEBUG\tValue: " + str(value) + "\tMSB: " + str(msb) + "\tLSB: " + str(lsb))
+        return (msb + lsb)

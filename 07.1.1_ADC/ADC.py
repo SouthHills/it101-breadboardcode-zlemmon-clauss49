@@ -6,9 +6,13 @@ from ADCDevice import *
 
 adc = ADCDevice() # Define an ADCDevice class object
 
+USING_GRAVITECH_ADC = False
+
 def setup():
     global adc
-    if(adc.detectI2C(0x48)): # Detect the pcf8591.
+    if(adc.detectI2C(0x48) and USING_GRAVITECH_ADC): 
+        adc = GravitechADC()
+    elif(adc.detectI2C(0x48)): # Detect the pcf8591.
         adc = PCF8591()
     elif(adc.detectI2C(0x4b)): # Detect the ads7830
         adc = ADS7830()
