@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import RPi.GPIO as GPIO
 
 ledPin = 11       # define ledPin
@@ -17,7 +15,7 @@ def buttonEvent(channel): # When button is pressed, this function will be execut
     ledState = not ledState
     if ledState :
         print ('Led turned on >>>')
-    else :
+    else:
         print ('Led turned off <<<')
     GPIO.output(ledPin,ledState)
     
