@@ -1,38 +1,32 @@
-import RPi.GPIO as GPIO
+from gpiozero import LED, Button
+from signal import pause
 
-ledPin = 11       # define ledPin
-buttonPin = 12    # define buttonPin
-ledState = False
+led = LED(17)  # define ledPin
+button = Button(18)  # define buttonPin
+ledState : bool = False
 
-def setup():    
-    GPIO.setmode(GPIO.BOARD)         # use PHYSICAL GPIO Numbering
-    GPIO.setup(ledPin, GPIO.OUT)     # set ledPin to OUTPUT mode
-    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)     # set buttonPin to PULL UP INPUT mode
-
-def buttonEvent(channel): # When button is pressed, this function will be executed
-    global ledState 
-    print ('buttonEvent GPIO%d' %channel)
+def changeLedState():
+    global ledState
     ledState = not ledState
-    if ledState :
-        print ('Led turned on >>>')
+    if(ledState == True):
+        led.on()
+        print ("led turned on >>>")
     else:
-        print ('Led turned off <<<')
-    GPIO.output(ledPin,ledState)
-    
-def loop():
-    #Button detect 
-    GPIO.add_event_detect(buttonPin,GPIO.FALLING,callback = buttonEvent,bouncetime=300)
-    while True:
-        pass
-                
-def destroy():
-    GPIO.cleanup()                     # Release GPIO resource
+        led.off()
+        print ("led turned off <<<")
 
-if __name__ == '__main__':     # Program entrance
-    print ('Program is starting...')
-    setup()
+def destroy():
+    # Release resources
+    led.close()
+    button.close()
+
+if __name__ == "__main__":     # Program entrance
+    print ("Program is starting...")
     try:
-        loop()
+        # If the button gets pressed, call the function
+        # This is an event
+        button.when_pressed = changeLedState
+        pause()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
         destroy()
 
