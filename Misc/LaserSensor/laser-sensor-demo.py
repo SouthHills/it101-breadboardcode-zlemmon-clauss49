@@ -9,11 +9,11 @@ def setup():
     # Setup laser
     GPIO.setup(laserPin, GPIO.OUT)
     GPIO.output(laserPin, GPIO.LOW)
-    print ('using pin%d'%laserPin)
+    print (f'using pin {laserPin}')
     
     # Setup reciever
     GPIO.setup(receiverPin, GPIO.IN)
-    print ('using pin%d'%receiverPin)
+    print (f'using pin {receiverPin}')
 
 def loop():
     while True:
