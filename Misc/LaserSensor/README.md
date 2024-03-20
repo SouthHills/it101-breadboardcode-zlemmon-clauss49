@@ -6,7 +6,7 @@
 
 The KY-008 Laser Transmitter module is a commonly used component in Arduino and Raspberry Pi projects for emitting a small laser beam. Paired with the Laser Receiver module, it enables the detection of this emitted laser beam. This combination is widely used in various DIY projects, including robotics, security systems, and interactive installations.
 
-This repository provides basic information about the KY-008 Laser Transmitter + Laser Receiver module, including pinout, usage, and sample code.
+This repository provides basic information about the KY-008 Laser Transmitter + Laser Receiver module, including pinout, sample code, and external documentation.
 
 ## Documentation
 
