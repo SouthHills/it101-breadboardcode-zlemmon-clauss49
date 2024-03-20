@@ -13,11 +13,11 @@ def initial_test():
     set_color(1, 0, 0)
     print("All red")
     time.sleep(1)
-    set_color(0, 0, 1)
-    print("All blue")
-    time.sleep(1)
     set_color(0, 1, 0)
     print("All green")
+    time.sleep(1)
+    set_color(0, 0, 1)
+    print("All blue")
     time.sleep(1)
 
 def loop():

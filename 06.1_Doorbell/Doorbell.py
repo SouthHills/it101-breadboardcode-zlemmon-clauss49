@@ -1,28 +1,24 @@
 import RPi.GPIO as GPIO
+from gpiozero import Buzzer, Button
 
-buzzerPin = 11    # define buzzerPin
-buttonPin = 12    # define buttonPin
-
-def setup():
-    GPIO.setmode(GPIO.BOARD)        # use PHYSICAL GPIO Numbering
-    GPIO.setup(buzzerPin, GPIO.OUT)   # set buzzerPin to OUTPUT mode
-    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)    # set buttonPin to PULL UP INPUT mode
+buzzer = Buzzer(17)
+button = Button(18)
 
 def loop():
     while True:
-        if GPIO.input(buttonPin)==GPIO.LOW: # if button is pressed
-            GPIO.output(buzzerPin,GPIO.HIGH) # turn on buzzer
+        if button.is_pressed: # if button is pressed
+            buzzer.on() # turn on buzzer
             print ('buzzer turned on >>>')
         else: # if button is relessed
-            GPIO.output(buzzerPin,GPIO.LOW) # turn off buzzer
+            buzzer.off() # turn off buzzer
             print ('buzzer turned off <<<')
 
 def destroy():
-    GPIO.cleanup()                     # Release all GPIO
+    buzzer.close()
+    button.close()
 
 if __name__ == '__main__':     # Program entrance
     print ('Program is starting...')
-    setup()
     try:
         loop()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.

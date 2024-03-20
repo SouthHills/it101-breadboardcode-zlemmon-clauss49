@@ -1,46 +1,48 @@
-import RPi.GPIO as GPIO
+from gpiozero import TonalBuzzer, Button
 import time
-import math
+from signal import pause
 
-buzzerPin = 11    # define the buzzerPin
-buttonPin = 12    # define the buttonPin
-
-def setup():
-    global p    
-    GPIO.setmode(GPIO.BOARD)         # Use PHYSICAL GPIO Numbering
-    GPIO.setup(buzzerPin, GPIO.OUT)   # set RGBLED pins to OUTPUT mode
-    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)    # Set buttonPin to INPUT mode, and pull up to HIGH level, 3.3V
-    p = GPIO.PWM(buzzerPin, 1) 
-    p.start(0)
+buzzer = TonalBuzzer(17)
+button = Button(18)
+HIGH_TONE = 600
+LOW_TONE = 220
     
-def loop():
-    while True:
-        if GPIO.input(buttonPin)==GPIO.LOW:
-            alertor()
-            print ('alertor turned on >>> ')
-        else:
-            stopAlertor()
-            print ('alertor turned off <<<')
+def setup():
+    # Setup events for when the button is pressed and released
+    button.when_pressed = alertor
+    button.when_released = stop_alertor
+
 def alertor():
-    p.start(50)
-    for x in range(0,361):      # Make frequency of the alertor consistent with the sine wave 
-        sinVal = math.sin(x * (math.pi / 180.0))        # calculate the sine value
-        toneVal = 2000 + sinVal * 500   # Add to the resonant frequency with a Weighted
-        p.ChangeFrequency(toneVal)      # Change Frequency of PWM to toneVal
-        time.sleep(0.001)
-        
-def stopAlertor():
-    p.stop()
+    print ('alertor turned on >>> ')
+    
+    while True:  
+        # Linear
+        for x in range(LOW_TONE, HIGH_TONE): # The max is 880 but that hurts my ears
+            buzzer.play(x)
+            time.sleep(0.002)
             
+            if not button.is_pressed:
+                return  
+            
+        for x in range(HIGH_TONE, LOW_TONE, -1): # The max is 880 but that hurts my ears
+            buzzer.play(x)
+            time.sleep(0.002)
+            
+            if not button.is_pressed:
+                return 
+        
+def stop_alertor():
+    buzzer.stop()
+    print ('alertor turned off <<<')
+
 def destroy():
-    GPIO.output(buzzerPin, GPIO.LOW)     # Turn off buzzer
-    GPIO.cleanup()                       # Release GPIO resource
+    buzzer.close()
+    button.close()
 
 if __name__ == '__main__':     # Program entrance
     print ('Program is starting...')
     setup()
     try:
-        loop()
+        pause()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
         destroy()
-
