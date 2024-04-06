@@ -3,16 +3,12 @@ from signal import pause
 
 led = LED(17)  # define ledPin
 button = Button(18)  # define buttonPin
-ledState : bool = False
 
 def changeLedState():
-    global ledState
-    ledState = not ledState
-    if(ledState == True):
-        led.on()
+    led.toggle()
+    if led.is_lit:
         print ("led turned on >>>")
     else:
-        led.off()
         print ("led turned off <<<")
 
 def destroy():
