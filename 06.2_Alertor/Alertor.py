@@ -4,7 +4,7 @@ from signal import pause
 
 buzzer = TonalBuzzer(17)
 button = Button(18)
-HIGH_TONE = 600
+HIGH_TONE = 600 # The max is 880 but that hurts my ears
 LOW_TONE = 220
     
 def setup():
@@ -17,14 +17,14 @@ def alertor():
     
     while True:  
         # Linear
-        for x in range(LOW_TONE, HIGH_TONE): # The max is 880 but that hurts my ears
+        for x in range(LOW_TONE, HIGH_TONE):
             buzzer.play(x)
             time.sleep(0.002)
             
             if not button.is_pressed:
                 return  
             
-        for x in range(HIGH_TONE, LOW_TONE, -1): # The max is 880 but that hurts my ears
+        for x in range(HIGH_TONE, LOW_TONE, -1):
             buzzer.play(x)
             time.sleep(0.002)
             
