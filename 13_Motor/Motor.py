@@ -1,7 +1,7 @@
 # Description : Control Motor with L293D
 import RPi.GPIO as GPIO
 import time
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 # define the pins connected to L293D 
 motoRPin1 = 13

@@ -1,7 +1,7 @@
 # Description : Control LED with Photoresistor
 import RPi.GPIO as GPIO
 import time
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 ledPin = 11 # define ledPin
 adc = ADCDevice() # Define an ADCDevice class object

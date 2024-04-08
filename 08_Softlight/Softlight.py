@@ -1,7 +1,7 @@
 # Description : Use ADC module to read the voltage value of potentiometer.
 import RPi.GPIO as GPIO
 import time
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 ledPin = 11
 adc = ADCDevice() # Define an ADCDevice class object

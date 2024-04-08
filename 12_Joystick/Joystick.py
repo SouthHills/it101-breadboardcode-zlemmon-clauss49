@@ -1,7 +1,7 @@
 # Description : Read Joystick state
 import RPi.GPIO as GPIO
 import time
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 Z_Pin = 12      # define Z_Pin
 adc = ADCDevice() # Define an ADCDevice class object

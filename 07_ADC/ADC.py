@@ -1,7 +1,8 @@
 # Description : Use ADC module to read the voltage value of potentiometer.
+# NOTE: The ADCDevice module exists in the Common directory.
 
 import time
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 adc = ADCDevice() # Define an ADCDevice class object
 

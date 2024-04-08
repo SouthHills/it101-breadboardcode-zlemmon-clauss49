@@ -1,7 +1,7 @@
 # Description : Control RGBLED with Potentiometer 
 import RPi.GPIO as GPIO
 import time
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 ledRedPin = 15      # define 3 pins for RGBLED
 ledGreenPin = 13

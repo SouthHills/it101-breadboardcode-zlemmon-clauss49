@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 import math
-from ADCDevice import *
+from ..Common.ADCDevice import *
 
 adc = ADCDevice() # Define an ADCDevice class object
 
