@@ -1,7 +1,12 @@
 # Description : Control RGBLED with Potentiometer 
+from pathlib import Path
+import sys
 import RPi.GPIO as GPIO
 import time
-from ..Common.ADCDevice import *
+
+HERE = Path(__file__).parent.parent
+sys.path.append(str(HERE / 'Common'))
+from ADCDevice import * 
 
 ledRedPin = 15      # define 3 pins for RGBLED
 ledGreenPin = 13

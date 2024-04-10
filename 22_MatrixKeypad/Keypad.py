@@ -138,24 +138,24 @@ class Keypad(object):
     def setHoldTime(self,ms):
         self.holdTime = ms
     #   
-    def isPressed(keyChar):
+    def isPressed(self, keyChar):
         for i in range(self.LIST_MAX):
             if(self.key[i].kchar == keyChar):
                 if(self.key[i].kstate == self.self.key[i].PRESSED and self.key[i].stateChanged):
                     return True
         return False
     #           
-    def waitForKey():
+    def waitForKey(self):
         kk = Key()
         waitKey = kk.NO_KEY
         while(waitKey == kk.NO_KEY):
-            waitKey = getKey()
+            waitKey = self.getKey()
         return waitKey
     
-    def getState():
+    def getState(self):
         return self.key[0].kstate
     #   
-    def keyStateChanged():
+    def keyStateChanged(self):
         return self.key[0].stateChanged
     
     def bitWrite(self,x,n,b):

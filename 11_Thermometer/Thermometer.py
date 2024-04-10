@@ -1,8 +1,13 @@
 # Description : DIY Thermometer
+from pathlib import Path
+import sys
 import RPi.GPIO as GPIO
 import time
 import math
-from ..Common.ADCDevice import *
+
+HERE = Path(__file__).parent.parent
+sys.path.append(str(HERE / 'Common'))
+from ADCDevice import * 
 
 adc = ADCDevice() # Define an ADCDevice class object
 

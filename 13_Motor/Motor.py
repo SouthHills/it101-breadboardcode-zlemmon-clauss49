@@ -1,7 +1,12 @@
 # Description : Control Motor with L293D
+from pathlib import Path
+import sys
 import RPi.GPIO as GPIO
 import time
-from ..Common.ADCDevice import *
+
+HERE = Path(__file__).parent.parent
+sys.path.append(str(HERE / 'Common'))
+from ADCDevice import * 
 
 # define the pins connected to L293D 
 motoRPin1 = 13
