@@ -8,6 +8,8 @@ HERE = Path(__file__).parent.parent
 sys.path.append(str(HERE / 'Common'))
 from ADCDevice import * 
 
+USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
+
 ledRedPin = 15      # define 3 pins for RGBLED
 ledGreenPin = 13
 ledBluePin = 11
@@ -15,7 +17,9 @@ adc = ADCDevice() # Define an ADCDevice class object
 
 def setup():
     global adc
-    if(adc.detectI2C(0x48)): # Detect the pcf8591.
+    if(adc.detectI2C(0x48) and USING_GRAVITECH_ADC): 
+        adc = GravitechADC()
+    elif(adc.detectI2C(0x48)): # Detect the pcf8591.
         adc = PCF8591()
     elif(adc.detectI2C(0x4b)): # Detect the ads7830
         adc = ADS7830()

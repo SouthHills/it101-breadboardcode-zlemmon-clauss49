@@ -8,9 +8,9 @@ HERE = Path(__file__).parent.parent
 sys.path.append(str(HERE / 'Common'))
 from ADCDevice import * 
 
-adc = ADCDevice() # Define an ADCDevice class object
+USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
 
-USING_GRAVITECH_ADC = False
+adc = ADCDevice() # Define an ADCDevice class object
 
 def setup():
     global adc

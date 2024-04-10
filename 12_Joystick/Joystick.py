@@ -8,12 +8,16 @@ HERE = Path(__file__).parent.parent
 sys.path.append(str(HERE / 'Common'))
 from ADCDevice import * 
 
+USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
+
 Z_Pin = 12      # define Z_Pin
 adc = ADCDevice() # Define an ADCDevice class object
 
 def setup():
     global adc
-    if(adc.detectI2C(0x48)): # Detect the pcf8591.
+    if(adc.detectI2C(0x48) and USING_GRAVITECH_ADC): 
+        adc = GravitechADC()
+    elif(adc.detectI2C(0x48)): # Detect the pcf8591.
         adc = PCF8591()
     elif(adc.detectI2C(0x4b)): # Detect the ads7830
         adc = ADS7830()
@@ -22,6 +26,7 @@ def setup():
         "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
         "Program Exit. \n")
         exit(-1)
+        
     GPIO.setmode(GPIO.BOARD)        
     GPIO.setup(Z_Pin,GPIO.IN,GPIO.PUD_UP)   # set Z_Pin to pull-up mode
 def loop():
