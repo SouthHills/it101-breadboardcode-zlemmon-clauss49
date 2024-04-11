@@ -1,7 +1,7 @@
 # Description : Use ADC module to read the voltage value of potentiometer.
 from pathlib import Path
 import sys
-import RPi.GPIO as GPIO
+from gpiozero import PWMLED
 import time
 
 HERE = Path(__file__).parent.parent
@@ -10,7 +10,7 @@ from ADCDevice import *
 
 USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
 
-ledPin = 11
+led = PWMLED(17) #17 is the pin
 adc = ADCDevice() # Define an ADCDevice class object
 
 def setup():
@@ -23,26 +23,23 @@ def setup():
         adc = ADS7830()
     else:
         print("No correct I2C address found, \n"
-        "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
-        "Program Exit. \n")
+            "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
+            "Program Exit. \n")
         exit(-1)
-        
-    global p
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(ledPin,GPIO.OUT)
-    p = GPIO.PWM(ledPin,1000)
-    p.start(0)
         
 def loop():
     while True:
-        value = adc.analogRead(0)    # read the ADC value of channel 0
-        p.ChangeDutyCycle(value*100/255)        # Mapping to PWM duty cycle
-        voltage = value / 255.0 * 3.3  # calculate the voltage value
-        print ('ADC Value : %d, Voltage : %.2f'%(value,voltage))
+        # read the ADC value of channel 0
+        value = adc.analogRead(0)  # Gets a value between 0 and 255
+        # Set LED brightness directly with value from ADC
+        led.value = value / 255.0  # Value of PWM LED must be between 0 and 1
+        # calculate the voltage value
+        voltage = value / 255.0 * 3.3  # 3.3 because we are using the 3.3V lead
+        print(f'ADC Value : {value}, Voltage : {voltage:.2f}')
         time.sleep(0.03)
 
 def destroy():
-    GPIO.cleanup()
+    led.close()
     adc.close()
     
 if __name__ == '__main__':   # Program entrance
@@ -53,4 +50,3 @@ if __name__ == '__main__':   # Program entrance
     except KeyboardInterrupt: # Press ctrl-c to end the program.
         destroy()
         
-    
