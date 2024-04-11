@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import time
 
+# The next two lines are required to be able to properly import ADCDevice
 HERE = Path(__file__).parent.parent
 sys.path.append(str(HERE / 'Common'))
 from ADCDevice import * 
