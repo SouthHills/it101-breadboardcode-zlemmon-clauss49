@@ -1,21 +1,20 @@
-import RPi.GPIO as GPIO
 from gpiozero import Buzzer, Button
 
-buzzer = Buzzer(17)
-button = Button(18)
+BUZZER = Buzzer(17)
+BUTTON = Button(18)
 
 def loop():
     while True:
-        if button.is_pressed: # if button is pressed
-            buzzer.on() # turn on buzzer
+        if BUTTON.is_pressed: # if button is pressed
+            BUZZER.on() # turn on buzzer
             print ('buzzer turned on >>>')
         else: # if button is relessed
-            buzzer.off() # turn off buzzer
+            BUZZER.off() # turn off buzzer
             print ('buzzer turned off <<<')
 
 def destroy():
-    buzzer.close()
-    button.close()
+    BUZZER.close()
+    BUTTON.close()
 
 if __name__ == '__main__':     # Program entrance
     print ('Program is starting...')

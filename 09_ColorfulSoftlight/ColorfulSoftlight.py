@@ -1,7 +1,7 @@
 # Description : Control RGBLED with Potentiometer 
 from pathlib import Path
 import sys
-import RPi.GPIO as GPIO
+from gpiozero import RGBLED
 import time
 
 HERE = Path(__file__).parent.parent
@@ -13,6 +13,7 @@ USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
 ledRedPin = 15      # define 3 pins for RGBLED
 ledGreenPin = 13
 ledBluePin = 11
+rgb_led = RGBLED(ledRed=ledRedPin, ledGreen=ledGreenPin, ledBlue=ledBluePin, pwm=True)
 adc = ADCDevice() # Define an ADCDevice class object
 
 def setup():
@@ -25,38 +26,26 @@ def setup():
         adc = ADS7830()
     else:
         print("No correct I2C address found, \n"
-        "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
-        "Program Exit. \n")
+            "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
+            "Program Exit. \n")
         exit(-1)
-        
-    global p_Red,p_Green,p_Blue
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(ledRedPin,GPIO.OUT)      # set RGBLED pins to OUTPUT mode
-    GPIO.setup(ledGreenPin,GPIO.OUT)
-    GPIO.setup(ledBluePin,GPIO.OUT)
-    
-    p_Red = GPIO.PWM(ledRedPin,1000)    # configure PMW for RGBLED pins, set PWM Frequence to 1kHz
-    p_Red.start(0)
-    p_Green = GPIO.PWM(ledGreenPin,1000)
-    p_Green.start(0)
-    p_Blue = GPIO.PWM(ledBluePin,1000)
-    p_Blue.start(0)
     
 def loop():
     while True:     
-        value_Red = adc.analogRead(0)       # read ADC value of 3 potentiometers
-        value_Green = adc.analogRead(1)
-        value_Blue = adc.analogRead(2)
-        p_Red.ChangeDutyCycle(value_Red*100/255)  # map the read value of potentiometers into PWM value and output it 
-        p_Green.ChangeDutyCycle(value_Green*100/255)
-        p_Blue.ChangeDutyCycle(value_Blue*100/255)
+        red_value = adc.analogRead(0)       # read ADC value of 3 potentiometers
+        green_value = adc.analogRead(1)
+        blue_value = adc.analogRead(2)
+        
+        # map the read value of potentiometers into normalized values (0-1) and set the RGBLED color
+        rgb_led.color = (red_value / 255.0, green_value / 255.0, blue_value / 255.0)
+        
         # print read ADC value
-        print ('ADC Value value_Red: %d ,\tvlue_Green: %d ,\tvalue_Blue: %d'%(value_Red,value_Green,value_Blue))
+        print(f'ADC Value value_Red: {red_value}, value_Green: {green_value}, value_Blue: {blue_value}')
         time.sleep(0.01)
 
 def destroy():
     adc.close()
-    GPIO.cleanup()
+    rgb_led.close()
     
 if __name__ == '__main__': # Program entrance
     print ('Program is starting ... ')

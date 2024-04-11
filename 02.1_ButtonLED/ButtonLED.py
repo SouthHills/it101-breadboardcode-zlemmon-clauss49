@@ -1,21 +1,23 @@
-from gpiozero import LED, Button
+from gpiozero import LED as LEDClass, Button
 
-led = LED(17)  # define ledPin
-button = Button(18)  # define buttonPin
+LED = LEDClass(17)  # define ledPin
+BUTTON = Button(18)  # define buttonPin
 
 def loop():
+    global LED, BUTTON
     while True:
-        if button.is_pressed:  # if button is pressed
-            led.on()  # turn on led
+        if BUTTON.is_pressed:  # if button is pressed
+            LED.on()  # turn on led
             print ("led turned on >>>")  # print information on terminal
         else:  # if button is released
-            led.off()  # turn off led 
+            LED.off()  # turn off led 
             print ("led turned off <<<")    
 
 def destroy():
+    global LED, BUTTON
     # Release resources
-    led.close()
-    button.close()
+    LED.close()
+    BUTTON.close()
 
 if __name__ == "__main__":     # Program entrance
     print ("Program is starting...")

@@ -3,11 +3,11 @@ import time
 import random
 
 # active_high must be true because it is a common anode RGBLed
-led = RGBLED(red=17, green=18, blue=27, active_high=True)
+LED = RGBLED(red=17, green=18, blue=27, active_high=True)
 
 def set_color(r, g, b):
-    # invert the colors due to using a common anode
-    led.color = (1 - r, 1 - g, 1 - b)
+    """ Invert the colors due to using a common anode """
+    LED.color = (1 - r, 1 - g, 1 - b)
 
 def initial_test():
     set_color(1, 0, 0)
@@ -30,7 +30,7 @@ def loop():
         time.sleep(1)
         
 def destroy():
-    led.close()
+    LED.close()
     
 if __name__ == '__main__':     # Program entrance
     print ('Program is starting ... ')
