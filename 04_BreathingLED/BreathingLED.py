@@ -8,13 +8,13 @@ def loop():
     while True:
         i : int = 0
         # range() only works with integers
-        for i in range(0, 10):
+        for i in range(0, 10): # make the led brighter
             # led.value only accepts floats
-            LED.value = i / 10
+            LED.value = i / 10 # set DC (direct current) value as the duty cycle
             time.sleep(0.1)
             
-        for i in range(10, 0, -1):
-            LED.value = i / 10
+        for i in range(10, 0, -1): # dim the led
+            LED.value = i / 10 # set DC value as the duty cycle
             time.sleep(0.1)
 
 def destroy():
