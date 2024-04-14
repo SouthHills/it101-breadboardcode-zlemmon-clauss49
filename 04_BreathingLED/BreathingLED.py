@@ -4,6 +4,7 @@ import time
 LED = PWMLED(18)  # define PWMLED
 
 def loop():
+    global LED
     while True:
         i : int = 0
         # range() only works with integers
@@ -17,9 +18,11 @@ def loop():
             time.sleep(0.1)
 
 def destroy():
+    global LED
     LED.close()
 
 if __name__ == '__main__':     # Program entrance
+    global LED
     print ('Program is starting ... ')
     print(f"Using pin {LED.pin}")
     try:
