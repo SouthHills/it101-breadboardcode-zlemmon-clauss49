@@ -1,4 +1,4 @@
-# Description : Control RGBLED with Potentiometer 
+# Description : Control RGBLED with Potentiometers
 from pathlib import Path
 import sys
 from gpiozero import RGBLED
@@ -10,10 +10,10 @@ from ADCDevice import *
 
 USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
 
-ledRedPin = 15      # define 3 pins for RGBLED
-ledGreenPin = 13
-ledBluePin = 11
-rgb_led = RGBLED(ledRed=ledRedPin, ledGreen=ledGreenPin, ledBlue=ledBluePin, pwm=True)
+ledRedPin = 22      # define 3 pins for RGBLED
+ledGreenPin = 27
+ledBluePin = 17
+rgb_led = RGBLED(red=ledRedPin, green=ledGreenPin, blue=ledBluePin, pwm=True)
 adc = ADCDevice() # Define an ADCDevice class object
 
 def setup():
@@ -31,19 +31,21 @@ def setup():
         exit(-1)
     
 def loop():
+    global adc, red_value, green_value, blue_value, rgb_led
     while True:     
         red_value = adc.analogRead(0)       # read ADC value of 3 potentiometers
         green_value = adc.analogRead(1)
         blue_value = adc.analogRead(2)
         
         # map the read value of potentiometers into normalized values (0-1) and set the RGBLED color
-        rgb_led.color = (red_value / 255.0, green_value / 255.0, blue_value / 255.0)
+        rgb_led.value = (red_value / 255.0, green_value / 255.0, blue_value / 255.0)
         
         # print read ADC value
         print(f'ADC Value value_Red: {red_value}, value_Green: {green_value}, value_Blue: {blue_value}')
         time.sleep(0.01)
 
 def destroy():
+    global adc, rgb_led
     adc.close()
     rgb_led.close()
     
