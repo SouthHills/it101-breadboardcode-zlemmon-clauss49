@@ -1,5 +1,4 @@
-# sudo apt install python3-pip
-# pip install pygame OR sudo apt install python3-pygame
+# NOTE: Run either "sudo apt install python3-pygame" OR "pip install pygame" in the terminal.
 
 import pygame
 import time
