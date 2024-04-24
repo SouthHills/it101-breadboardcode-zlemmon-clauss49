@@ -23,7 +23,7 @@ if __name__ == "__main__":     # Program entrance
     try:
         # If the button gets pressed, call the function
         # This is an event
-        BUTTON.when_pressed = changeLedState
+        BUTTON.when_pressed = changeLedState()
         pause()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
         destroy()
