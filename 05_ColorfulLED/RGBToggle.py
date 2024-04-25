@@ -1,11 +1,12 @@
 from gpiozero import RGBLED,  Button
-from signal import pause
 import time
 import random
 
 # active_high must be true because it is a common anode RGBLed
 LED = RGBLED(red=17, green=18, blue=27, active_high=True)
 BUTTON = Button(24)  # define buttonPin
+
+pushed= True
 
 def set_color(r, g, b):
     """ Invert the colors due to using a common anode """
@@ -23,25 +24,28 @@ def initial_test():
     time.sleep(1)
 
 def changeLedState():
-    global LED, pushed
-    pushed = False
-    LED.toggle()
+    global pushed
     print("button pushed")
+    
     pushed = not pushed
     
     
-def loop():
     
+    
+def loop():
     global pushed
     
-    while pushed == True :
-        BUTTON.when_pressed = changeLedState()
-        r=random.randint(0,100)
-        g=random.randint(0,100)
-        b=random.randint(0,100)
-        set_color(r / 100, g / 100, b / 100) # Colors should be between 0 and 1
-        print (f'r={r}% \tg={g}% \tb={b}%')
-        time.sleep(1)
+    while True :
+        if pushed == True :
+            
+            r=random.randint(0,100)
+            g=random.randint(0,100)
+            b=random.randint(0,100)
+            set_color(r / 100, g / 100, b / 100) # Colors should be between 0 and 1
+            print (f'r={r}% \tg={g}% \tb={b}%')
+            time.sleep(1)
+        else:
+            set_color(0,0,0)
             
     
         
@@ -57,11 +61,11 @@ if __name__ == '__main__':     # Program entrance
         
         # If the button gets pressed, call the function
         # This is an event
-        BUTTON.when_pressed = changeLedState()
+        BUTTON.when_activated = changeLedState
         
           
         loop()
-        pause()
+        
         
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
         destroy()
