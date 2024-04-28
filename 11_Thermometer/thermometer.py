@@ -34,14 +34,14 @@ def loop():
         tempK = 1/(1/(273.15 + 25) + math.log(Rt/10)/3950.0) # calculate temperature (Kelvin)
         tempC = tempK - 273.15        # calculate temperature (Celsius)
         tempF = tempC * 1.8 + 32
-        print (f'ADC Value: {value}\t Voltage: {voltage:.2f}\t Temperature(C): {tempC:.2f}\t Temperature(F): {tempF:.2f}')
+        print (f'ADC Value: {value} \tVoltage: {voltage:.2f} \tTemperature(C): {tempC:.2f} \tTemperature(F): {tempF:.2f}')
         time.sleep(0.01)
 
 def destroy():
     ADC.close()
     
 if __name__ == '__main__':  # Program entrance
-    print ('Program is starting ... ')
+    print ('Program is starting... ')
     setup()
     try:
         loop()
