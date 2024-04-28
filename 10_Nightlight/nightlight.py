@@ -42,7 +42,7 @@ def destroy():
     LED.close()
     
 if __name__ == '__main__':   # Program entrance
-    print ('Program is starting ... ')
+    print ('Program is starting... ')
     setup()
     try:
         loop()
