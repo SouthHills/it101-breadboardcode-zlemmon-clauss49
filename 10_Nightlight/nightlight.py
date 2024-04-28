@@ -33,7 +33,7 @@ def loop():
         value = ADC.analogRead(0)   # read the ADC value of channel 0
         LED.value = value / 255.0   # Mapping to PWM duty cycle        
         voltage = value / 255.0 * 3.3
-        print (f'ADC Value: {value}\tVoltage: {voltage:.2f}\tLED Value: {LED.value:.2f}')
+        print (f'ADC Value: {value} \tVoltage: {voltage:.2f} \tLED Value: {LED.value:.2f}')
         time.sleep(0.01)
 
 def destroy():
