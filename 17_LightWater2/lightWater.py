@@ -21,6 +21,7 @@ def shift_out(order,val):
         val (int): The data to be sent as a sequence of bits.
     """
     global LSBFIRST, MSBFIRST, CLOCK_PIN, DATA_PIN
+    debug_print_out: str = "["
     for i in range(0, 8):
         CLOCK_PIN.off()  # Turning off the clock to prepare for sending a bit
         if order == LSBFIRST:
@@ -28,16 +29,22 @@ def shift_out(order,val):
             #   and send it out accordingly
             if (0x01 & (val >> i) == 0x01):
                 DATA_PIN.on()   # If the bit is 1, we turn on the data pin
+                debug_print_out += "X, "
             else:
                 DATA_PIN.off()  # If the bit is 0, we turn off the data pin
+                debug_print_out += "O, "
         elif order == MSBFIRST:
             # If we're sending MSB first, we check each bit of the value from left to right
             #   and send it out accordingly
             if (0x80 & (val << i) == 0x80):
                 DATA_PIN.on()   # If the bit is 1, we turn on the data pin
+                debug_print_out += "X, "
             else:
                 DATA_PIN.off()  # If the bit is 0, we turn off the data pin
+                debug_print_out += "O, "
         CLOCK_PIN.on()  # Turning on the clock to send the bit
+    debug_print_out = debug_print_out[:-2] + "]"
+    print(debug_print_out)
 
 def loop():
     """

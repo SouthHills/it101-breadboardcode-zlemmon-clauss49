@@ -19,12 +19,16 @@ def update_leds(led_index):
         led_index (int): The index of the LED to turn on.
     """
     global DATA_PIN, LATCH_PIN
+    debug_print_out: str = "["
     for i in range(8):
         DATA_PIN.value = (i == led_index)   # Turn on the LED at led_index, turn off others
+        debug_print_out += ("X" if i == led_index else "O") + ", "
         CLOCK_PIN.on()      # Clock pulse to shift the data
         CLOCK_PIN.off()     # Turn off the clock
     LATCH_PIN.on()      # Update the LED outputs
     LATCH_PIN.off()     # Turn off the latch
+    debug_print_out = debug_print_out[:-2] + "]"
+    print(debug_print_out)
 
 def loop():
     while True:
