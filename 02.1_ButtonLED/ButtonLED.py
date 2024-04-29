@@ -1,7 +1,7 @@
 from gpiozero import LED as LEDClass, Button
 
 LED = LEDClass(17)  # define ledPin
-BUTTON = Button(18)  # define buttonPin
+BUTTON = Button(24)  # define buttonPin
 
 def loop():
     global LED, BUTTON
