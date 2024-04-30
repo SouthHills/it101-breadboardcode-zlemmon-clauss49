@@ -167,4 +167,9 @@ def game_loop():
             pygame.quit() # Kill game
             quit() # Kill program
 
-game_loop()
+if __name__ == '__main__':
+    print ('Program is starting ... ') # Program entrance
+    try:
+        game_loop()
+    except KeyboardInterrupt: # Press ctrl-c to end the program.
+        pass
