@@ -1,14 +1,40 @@
+from gpiozero import  Button
+from signal import pause
 import subprocess
-import time
-# Start the process
-process = subprocess.Popen(["firefox"])
-# Wait for some time (for demonstration)
-time.sleep(15)
-# Terminate the process
-process.terminate()
 
+
+
+BUTTON = Button(25)  # define buttonPin
 process = subprocess.Popen(["chromium-browser"])
-# Wait for some time (for demonstration)
-time.sleep(15)
-# Terminate the process
-process.terminate()
+
+def changeLedState():
+    global process
+    if BUTTON.is_active:
+        process
+        print("Pushed")
+    else:
+        process.terminate()
+        print("you suck")
+
+def destroy():
+    global  BUTTON
+    # Release resources
+    BUTTON.close()
+
+if __name__ == "__main__":     # Program entrance
+    print ("Program is starting...")
+    try:
+        # If the button gets pressed, call the function
+        # This is an event
+        BUTTON.when_pressed = changeLedState()
+        pause()
+    except KeyboardInterrupt:  # Press ctrl-c to end the program.
+        destroy()
+
+
+
+#process = subprocess.Popen(["chromium-browser"])
+    # Wait for some time (for demonstration)
+#time.sleep(15)
+    # Terminate the process
+#process.terminate()

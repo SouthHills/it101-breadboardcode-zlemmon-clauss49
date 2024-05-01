@@ -3,7 +3,6 @@ import time
 import random
 from signal import pause
 
-#ask for help relating to tuples
 
 # active_high must be true because it is a common anode RGBLed
 LED = RGBLED(red=17, green=18, blue=27, active_high=True)
@@ -18,6 +17,7 @@ BUTTON = Button(25)  # define buttonPin
 # colors = [red, blue, green]
 
 pushed= False
+react = False
 
 
 def set_color(r, g, b):
@@ -38,11 +38,34 @@ def initial_test():
     time.sleep(1)
 
 def changeLedState():
-    global pushed
+    global react
     print("button pushed")
+    react = not react
     
-    
-    
+def reaction():
+    if set_color(selected_color[0], selected_color[1], selected_color[2]) == True:
+        i = 0
+        while i < 5:
+            print("fast?")
+            set_color(0,1,0)
+            time.sleep(.5)
+            set_color(0,0,0)
+            time.sleep(.5)
+            set_color(0,1,0)
+        LED.close() 
+    else:
+        i = 0
+        while i < 5:
+            print("Slow")
+            set_color(1,0,0)
+            time.sleep(.5)
+            set_color(0,0,0)
+            time.sleep(.5)
+            set_color(1,0,0)
+            i = i +1
+            
+               
+    LED.close()
     
     
     
@@ -53,17 +76,22 @@ def loop():
     c3 = (0,0,1)
     game_color = [c1,c2,c3]
     
-    while pushed == False :
+    while pushed == False and react == False :
+        global selected_color
         selected_color = random.choice((game_color))
         if  selected_color == c2:
             set_color(selected_color[0], selected_color[1], selected_color[2])
             pushed = True
-            pause()
+            time.sleep(1)
+            
+            
         else:
             set_color(selected_color[0], selected_color[1], selected_color[2])
             time.sleep(1)
+    reaction()
             
-   
+
+
         
         
 def destroy():
@@ -81,6 +109,8 @@ if __name__ == '__main__':     # Program entrance
         
           
         loop()
+        
+        
         
         
     except KeyboardInterrupt:  # Press ctrl-c to end the program.

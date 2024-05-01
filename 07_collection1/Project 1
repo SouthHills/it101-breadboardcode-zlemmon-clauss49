@@ -1,64 +1,43 @@
-from gpiozero import RGBLED,  Button
-import subprocess
+from gpiozero import  Button
 from signal import pause
+import subprocess
 
-
-#Use pushed to trigger the terminate stuff here
-
-global process1 
-global process2 
-
-pushed1 = False
-pushed2 = False
-
-
-BUTTON1 = Button(24) 
+BUTTON1 = Button(24)
 BUTTON2 = Button(25)  # define buttonPin
+process1 = subprocess.Popen(["chromium-browser"])
+process2 = subprocess.Popen(["firefox"])
 
-def fox():
-    
-    global process1
-    process1 = subprocess.Popen(["firefox"])
-    if pushed1 == True:
-        print ("firefox turned on >>>")
-        process1 = subprocess.Popen(["firefox"])
+def changeLedState1():
+    global process
+    if BUTTON1.is_active:
+        process1
+        print("Pushed")
     else:
-        process1.terminate()
+        process.terminate()
+        print("you suck")
 
-def chromium():
-    
-    global process2
-    process2 = subprocess.Popen(["chromium-browser"])
-    if pushed2 == True:
-        print ("chromium turned on >>>")
-        process2 = subprocess.Popen(["chromium-browser"])
+def changeLedState2():
+    global process
+    if BUTTON2.is_active:
+        process2
+        print("Pushed")
     else:
         process2.terminate()
+        print("you suck")
 
 def destroy():
-    global LED, BUTTON2, BUTTON1
+    global  BUTTON1, BUTTON2
     # Release resources
     BUTTON1.close()
     BUTTON2.close()
-    
-def changeLedState1():
-    global pushed1
-    print("button pushed")
-    
-def changeLedState2():
-    global pushed2
-    print("button pushed")
 
 if __name__ == "__main__":     # Program entrance
     print ("Program is starting...")
     try:
         # If the button gets pressed, call the function
         # This is an event
-        BUTTON1.when_pressed = changeLedState1
-        BUTTON2.when_pressed = changeLedState2
-        
-        fox()
-        chromium()
+        BUTTON1.when_pressed = changeLedState1()
+        BUTTON2.when_pressed = changeLedState2()
         pause()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
         destroy()
