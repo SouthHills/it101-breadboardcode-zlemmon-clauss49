@@ -6,3 +6,9 @@ process = subprocess.Popen(["firefox"])
 time.sleep(15)
 # Terminate the process
 process.terminate()
+
+process = subprocess.Popen(["chromium-browser"])
+# Wait for some time (for demonstration)
+time.sleep(15)
+# Terminate the process
+process.terminate()

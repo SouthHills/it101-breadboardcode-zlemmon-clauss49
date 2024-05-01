@@ -1,76 +1,64 @@
 from gpiozero import RGBLED,  Button
-import time
-import random
+import subprocess
+from signal import pause
+
 
 #Use pushed to trigger the terminate stuff here
 
+global process1 
+global process2 
+
+pushed1 = False
+pushed2 = False
 
 
+BUTTON1 = Button(24) 
+BUTTON2 = Button(25)  # define buttonPin
 
-# active_high must be true because it is a common anode RGBLed
-LED = RGBLED(red=17, green=18, blue=27, active_high=True)
-BUTTON = Button(25)  # define buttonPin
+def fox():
+    
+    global process1
+    process1 = subprocess.Popen(["firefox"])
+    if pushed1 == True:
+        print ("firefox turned on >>>")
+        process1 = subprocess.Popen(["firefox"])
+    else:
+        process1.terminate()
 
-pushed= True
+def chromium():
+    
+    global process2
+    process2 = subprocess.Popen(["chromium-browser"])
+    if pushed2 == True:
+        print ("chromium turned on >>>")
+        process2 = subprocess.Popen(["chromium-browser"])
+    else:
+        process2.terminate()
 
-def set_color(r, g, b):
-    """ Invert the colors due to using a common anode """
-    LED.color = (1 - r, 1 - g, 1 - b)
-
-def initial_test():
-    set_color(1, 0, 0)
-    print("All red")
-    time.sleep(1)
-    set_color(0, 1, 0)
-    print("All green")
-    time.sleep(1)
-    set_color(0, 0, 1)
-    print("All blue")
-    time.sleep(1)
-
-def changeLedState():
-    global pushed
+def destroy():
+    global LED, BUTTON2, BUTTON1
+    # Release resources
+    BUTTON1.close()
+    BUTTON2.close()
+    
+def changeLedState1():
+    global pushed1
     print("button pushed")
     
-    pushed = not pushed
-    
-    
-    
-    
-def loop():
-    global pushed
-    
-    while True :
-        if pushed == True :
-            
-            r=random.randint(0,100)
-            g=random.randint(0,100)
-            b=random.randint(0,100)
-            set_color(r / 100, g / 100, b / 100) # Colors should be between 0 and 1
-            print (f'r={r}% \tg={g}% \tb={b}%')
-            time.sleep(1)
-        else:
-            set_color(0,0,0)
-            
-    
-        
-        
-def destroy():
-    LED.close()
-    
-if __name__ == '__main__':     # Program entrance
-    print ('Program is starting ... ')
-    initial_test()
-    
+def changeLedState2():
+    global pushed2
+    print("button pushed")
+
+if __name__ == "__main__":     # Program entrance
+    print ("Program is starting...")
     try:
-        
         # If the button gets pressed, call the function
         # This is an event
-        BUTTON.when_activated = changeLedState
+        BUTTON1.when_pressed = changeLedState1
+        BUTTON2.when_pressed = changeLedState2
         
-          
-        loop()
-        
-        
+        fox()
+        chromium()
+        pause()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
         destroy()
