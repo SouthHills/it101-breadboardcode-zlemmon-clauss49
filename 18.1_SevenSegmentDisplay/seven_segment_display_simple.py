@@ -1,7 +1,4 @@
 # Description : Control SevenSegmentDisplay with 74HC595
-import RPi.GPIO as GPIO
-import time
-
 from gpiozero import OutputDevice
 import time
 
