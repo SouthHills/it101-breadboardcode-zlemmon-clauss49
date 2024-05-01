@@ -7,8 +7,8 @@ import random
 pygame.init()
 
 # Set up the display
-GRID_SIZE = 20
-GRID_WIDTH, GRID_HEIGHT = 40, 30  # 40 columns x 30 rows
+GRID_SIZE = 28
+GRID_WIDTH, GRID_HEIGHT = 28, 24  # 28 columns x 24 rows
 WIDTH, HEIGHT = GRID_WIDTH * GRID_SIZE, GRID_HEIGHT * GRID_SIZE
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Snake Game - Score: 0")

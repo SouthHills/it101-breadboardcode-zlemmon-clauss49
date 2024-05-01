@@ -13,6 +13,7 @@ class Joystick:
     BUTTON = Button(18) # define Z Pin (button)
     ADC = ADCDevice() # Define an ADCDevice class object
     last_direction = "Neutral"
+    button_pressed_momentary = False
 
     def __init__(self):
         if(self.ADC.detectI2C(0x48) and self.USING_GRAVITECH_ADC): 
@@ -32,6 +33,14 @@ class Joystick:
         val_Y = self.ADC.analogRead(0)           # read analog value of axis X and Y
         val_X = self.ADC.analogRead(1)
         return self.get_direction(val_X, val_Y), val_X, val_Y, val_Z
+    
+    def get_button_pressed(self):
+        button_pressed = self.BUTTON.is_active
+        if button_pressed and not self.button_pressed_momentary:
+            self.button_pressed_momentary = True
+        else:
+            self.button_pressed_momentary = False
+        return self.button_pressed_momentary
             
     def get_direction(self, x = None, y = None):
         # If this method has been called seperately from get_xy_pos(), x and y need values
