@@ -1,18 +1,23 @@
 from gpiozero import RGBLED,  Button
 import time
 import random
-
+from signal import pause
 
 #ask for help relating to tuples
 
-
-
 # active_high must be true because it is a common anode RGBLed
 LED = RGBLED(red=17, green=18, blue=27, active_high=True)
-BUTTON = Button(24)  # define buttonPin
+BUTTON = Button(25)  # define buttonPin
 
+# tuples
+#red = (1, 0, 0)
+#blue = (0, 0, 1)
+#green = (1, 1, 0)
 
-pushed= True
+# array of tuples
+# colors = [red, blue, green]
+
+pushed= False
 
 
 def set_color(r, g, b):
@@ -36,26 +41,27 @@ def changeLedState():
     global pushed
     print("button pushed")
     
-    pushed = not pushed
+    
     
     
     
     
 def loop():
     global pushed
-    c1 = set_color(1,0,0)
-    c2 = set_color(0,1,0)
-    c3 = set_color(0,0,1)
-    game_color = tuple (c1,c2,c3)
+    c1 = (1,0,0)
+    c2 = (0,1,0)
+    c3 = (0,0,1)
+    game_color = [c1,c2,c3]
     
-    
-    while True :
-        if pushed == True :
-            
-            set_color(game_color.randint(1,3))
-            time.sleep(1)
+    while pushed == False :
+        selected_color = random.choice((game_color))
+        if  selected_color == c2:
+            set_color(selected_color[0], selected_color[1], selected_color[2])
+            pushed = True
+            pause()
         else:
-            set_color(0,0,0)
+            set_color(selected_color[0], selected_color[1], selected_color[2])
+            time.sleep(1)
             
    
         
