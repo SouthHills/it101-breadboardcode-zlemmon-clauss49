@@ -30,7 +30,7 @@ class FourDigitDisplayWithSP:
     display_thread: threading.Thread = None
     
     def __init__(self, digit_pins: tuple, msb_first: bool, data_pin, latch_pin, clock_pin, initial_number = 0):
-        self.outputs = list(map(lambda pin: OutputDevice(pin), digit_pins))
+        self.outputs = tuple(map(lambda pin: OutputDevice(pin), digit_pins))
         self.msb_first = msb_first
         self.data_pin = OutputDevice(data_pin)
         self.latch_pin = OutputDevice(latch_pin)
@@ -46,7 +46,7 @@ class FourDigitDisplayWithSP:
     def __shift_out(self, msb: bool, val):
         for i in range(0, 8):
             self.clock_pin.off()  # Turning off the clock to prepare for sending a bit
-            if msb == self.msb_first:
+            if msb != self.msb_first:
                 # If we're sending LSB first, we check each bit of the value from right to left
                 #   and send it out accordingly
                 if (0x01 & (val >> i) == 0x01):
@@ -75,6 +75,7 @@ class FourDigitDisplayWithSP:
         
     def __display(self, dec):   # display function for 7-segment display
         global NUM_PATTERNS
+        time.sleep(0.003)
         self.__outData(0xff)   # eliminate residual display
         self.__selectDigit(0x01)   # Select the first, and display the single digit
         self.__outData(NUM_PATTERNS[dec%10])
