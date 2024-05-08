@@ -14,7 +14,7 @@ def changeLedState1():
         print("Pushed")
     else:
         process.terminate()
-        print("you suck")
+        print("you suck chrom")
 
 def changeLedState2():
     global process
@@ -23,7 +23,7 @@ def changeLedState2():
         print("Pushed")
     else:
         process2.terminate()
-        print("you suck")
+        print("you suck fox")
 
 def destroy():
     global  BUTTON1, BUTTON2
