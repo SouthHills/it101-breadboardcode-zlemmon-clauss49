@@ -1,7 +1,5 @@
 # NOTE: If running the game gives you an error, run either "sudo apt install python3-pygame" OR "pip install pygame" in the terminal.
-
 import pygame
-import time
 import random
 
 pygame.init()
@@ -40,12 +38,11 @@ def message(msg, color):
 
 # Function to generate random food position
 def generate_food():
-
     return random.randrange(GRID_WIDTH), random.randrange(GRID_HEIGHT)
 
 def do_keypress_event(current_direction):
     global PAUSED
-    # NOTE: Replace "False" with the correct method call to the joystick object you make
+    # TODO: Replace "False" with the correct method call to the joystick object you make
     # Can't double-back on your snake
     if False and current_direction != "RIGHT":
         return "LEFT"
@@ -55,7 +52,7 @@ def do_keypress_event(current_direction):
         return "UP"
     elif False and current_direction != "UP":
         return "DOWN"
-    elif False: # Escape pauses the game
+    elif False: # Pressing in on the joystick should pause the game
         PAUSED = True
 
 # Function to main loop
@@ -98,7 +95,7 @@ def game_loop():
                             pygame.quit() # Kill game
                             quit() # Kill program
                 
-                # Replace "False" with a call to the appropriate method in your joystick instance
+                # TODO: Replace "False" with a call to the appropriate method in your joystick instance
                 if False:
                     PAUSED = False
 
@@ -164,7 +161,7 @@ def game_loop():
                         game_close = False
                         game_over = True
             
-            # Replace "False" with a call to the appropriate method in your joystick instance
+            # TODO: Replace "False" with a call to the appropriate method in your joystick instance
             if False:
                 game_close = False
                 game_over = False
