@@ -49,14 +49,13 @@ def loop():
         
         # barlight thing
         #while True:
-        #    for pin in ledPins:     # make led(on) move from left to right
-        #        GPIO.output(pin, GPIO.LOW)  
-        #        time.sleep(0.1)
-        #        GPIO.output(pin, GPIO.HIGH)
-        #    for pin in ledPins[::-1]:       # make led(on) move from right to left
-        #        GPIO.output(pin, GPIO.LOW)  
-        #        time.sleep(0.1)
-        #        GPIO.output(pin, GPIO.HIGH)
+        for i  in (1,10):
+            if i > value/255:
+                for pin in ledPins:     # make led(on) move from left to right
+                    GPIO.output(pin, GPIO.LOW)  
+                    time.sleep(0.1)
+                    GPIO.output(pin, GPIO.HIGH)
+        
 
 def destroy():
     global ADC, LED
