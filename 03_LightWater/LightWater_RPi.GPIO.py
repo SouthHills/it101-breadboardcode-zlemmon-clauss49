@@ -3,7 +3,8 @@
 import RPi.GPIO as GPIO
 import time
 
-ledPins = [11, 12, 13, 15, 16, 18, 22, 3, 5, 24]
+#ledPins = [11, 12, 13, 15, 16, 18, 22, 3, 5, 24]
+ledPins = [12,16,18,22,32,36,38,40,37,35]
 
 def setup():    
     GPIO.setmode(GPIO.BOARD)        # use PHYSICAL GPIO Numbering

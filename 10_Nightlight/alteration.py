@@ -3,6 +3,12 @@ from pathlib import Path
 import sys
 from gpiozero import PWMLED
 import time
+import RPi.GPIO as GPIO
+
+
+
+#barlight pins
+ledPins = [12,16,18,22,32,36,38,40,37,35]
 
 HERE = Path(__file__).parent.parent
 sys.path.append(str(HERE / 'Common'))
@@ -26,6 +32,11 @@ def setup():
             "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
             "Program Exit. \n")
         exit(-1)
+        
+    #enable barlight
+    GPIO.setmode(GPIO.BOARD)        # use PHYSICAL GPIO Numbering
+    GPIO.setup(ledPins, GPIO.OUT)   # set all ledPins to OUTPUT mode
+    GPIO.output(ledPins, GPIO.HIGH) # make all ledPins output HIGH level, turn off all led
     
 def loop():
     global ADC, LED
@@ -35,11 +46,23 @@ def loop():
         voltage = value / 255.0 * 3.3
         print (f'ADC Value: {value}\tVoltage: {voltage:.2f}\tLED Value: {LED.value:.2f}')
         time.sleep(0.01)
+        
+        # barlight thing
+        #while True:
+        #    for pin in ledPins:     # make led(on) move from left to right
+        #        GPIO.output(pin, GPIO.LOW)  
+        #        time.sleep(0.1)
+        #        GPIO.output(pin, GPIO.HIGH)
+        #    for pin in ledPins[::-1]:       # make led(on) move from right to left
+        #        GPIO.output(pin, GPIO.LOW)  
+        #        time.sleep(0.1)
+        #        GPIO.output(pin, GPIO.HIGH)
 
 def destroy():
     global ADC, LED
     ADC.close()
     LED.close()
+    GPIO.cleanup()
     
 if __name__ == '__main__':   # Program entrance
     print ('Program is starting ... ')
