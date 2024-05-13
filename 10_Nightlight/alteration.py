@@ -1,14 +1,8 @@
 # Description : Control LED with Photoresistor
 from pathlib import Path
 import sys
-from gpiozero import PWMLED
+from gpiozero import LEDBarGraph
 import time
-import RPi.GPIO as GPIO
-
-
-
-#barlight pins
-ledPins = [12,16,18,22,32,36,38,40,37,35]
 
 HERE = Path(__file__).parent.parent
 sys.path.append(str(HERE / 'Common'))
@@ -16,7 +10,9 @@ from ADCDevice import *
 
 USING_GRAVITECH_ADC = False # Only modify this if you are using a Gravitech ADC
 
-LED = PWMLED(17)
+#barlight pins
+ledPins = [18,23,24,25,12,16,20,21,26,19]
+LEDS = LEDBarGraph(*ledPins, active_high=False)
 ADC = ADCDevice() # Define an ADCDevice class object
 
 def setup():
@@ -32,36 +28,35 @@ def setup():
             "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
             "Program Exit. \n")
         exit(-1)
-        
-    #enable barlight
-    GPIO.setmode(GPIO.BOARD)        # use PHYSICAL GPIO Numbering
-    GPIO.setup(ledPins, GPIO.OUT)   # set all ledPins to OUTPUT mode
-    GPIO.output(ledPins, GPIO.HIGH) # make all ledPins output HIGH level, turn off all led
     
 def loop():
-    global ADC, LED
+    global ADC, LEDS
     while True:
-        value = ADC.analogRead(0)   # read the ADC value of channel 0
-        LED.value = value / 255.0   # Mapping to PWM duty cycle        
-        voltage = value / 255.0 * 3.3
-        print (f'ADC Value: {value}\tVoltage: {voltage:.2f}\tLED Value: {LED.value:.2f}')
-        time.sleep(0.01)
+        value = ADC.analogRead(0)   # read the ADC value of channel 0 
+        possible_values = [25.5, 51, 76.5,102,127.5,153,178.5,204,229.5,255]   
         
         # barlight thing
         #while True:
-        for i  in (1,10):
-            if i > value/255:
-                for pin in ledPins:     # make led(on) move from left to right
-                    GPIO.output(pin, GPIO.LOW)  
-                    time.sleep(0.1)
-                    GPIO.output(pin, GPIO.HIGH)
+
+        for i  in range(len(possible_values)):
+            if value < possible_values[i]:
+                LEDS[i].on()
+        
+        for i in range(len(possible_values)):
+            if value >= possible_values[i]:
+                LEDS[i].off()
+        
+        voltage = value / 255.0 * 3.3
+        print (f'ADC Value: {value}\tVoltage: {voltage:.2f}')
+        time.sleep(0.01)
+
         
 
 def destroy():
-    global ADC, LED
+    global ADC, LEDS
     ADC.close()
-    LED.close()
-    GPIO.cleanup()
+    for led in LEDS:
+        led.close()
     
 if __name__ == '__main__':   # Program entrance
     print ('Program is starting ... ')
