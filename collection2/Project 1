@@ -1,0 +1,45 @@
+import subprocess
+from gpiozero import LED as LEDClass
+
+LEDRED = LEDClass(18)  # define red
+LEDGREEN = LEDClass(17)  # define green
+
+
+
+def loop():
+    global LEDGREEN, LEDRED
+    while True:
+        if is_internet_connected() is True:  # if button is pressed
+            LEDGREEN.on()
+            LEDRED.off()
+            print ("Green on ")
+        else:  # if button is released
+            LEDGREEN.off()  # turn on led
+            LEDRED.on()
+            print ("Red on <<<")    
+
+def destroy():
+    global LEDRED,LEDGREEN
+    # Release resources
+    LEDRED.close()
+    LEDGREEN.close()
+    
+    
+def is_internet_connected():
+    try:
+# Run the ping command with a timeout of 2 seconds and count 1 packet
+        subprocess.check_output(['ping', '-c', '1', '-W', '2', 'www.google.com'])
+        print("Connection!")
+        return True
+    except subprocess.CalledProcessError:
+        print("No connection")
+        return False
+if __name__ == "__main__":     # Program entrance
+    print ("Program is starting...")
+    try:
+        is_internet_connected()
+        loop()
+    except KeyboardInterrupt:  # Press ctrl-c to end the program.
+        destroy()
+
+

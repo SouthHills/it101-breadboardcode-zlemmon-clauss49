@@ -1,0 +1,80 @@
+#Use a potentiometer, a red, yellow, green, and blue LED, and ADC for this. The goal is to correlate the
+#current flowing through the potentiometer with the activation of specific LEDs.
+#• At 25% of the potentiometer's range, the blue LED should illuminate.
+#• At 50%, both the blue and green LEDs should be active.
+#• At 75%, the blue, green, and yellow LEDs should light up.
+#• Lastly, at 95%, all LEDs including the red LED should be turned on.
+#Reversing the potentiometer should turn off the LEDs in the order they turned on after falling below
+#their activation threshold.
+#Do not try to attempt this with one circuit. At least four discrete circuits are required for this
+
+
+from pathlib import Path
+import sys
+import time
+import subprocess
+from gpiozero import LED as LEDClass
+
+LEDBLUE = LEDClass(17)
+LEDGREEN = LEDClass(18)  # define green
+LEDYELLOW = LEDClass(22)
+LEDRED = LEDClass(12)  # define red
+
+ledPins = [LEDBLUE,LEDGREEN,LEDYELLOW,LEDRED]
+
+# properly import ADCDevice
+HERE = Path(__file__).parent.parent
+sys.path.append(str(HERE / 'Common'))
+from ADCDevice import * 
+
+USING_GRAVITECH_ADC = False 
+
+ADC = ADCDevice() #
+
+def setup():
+    global ADC
+    if(ADC.detectI2C(0x48) and USING_GRAVITECH_ADC): 
+        ADC = GravitechADC()
+    elif(ADC.detectI2C(0x48)): 
+        ADC = PCF8591()
+    elif(ADC.detectI2C(0x4b)): 
+        ADC = ADS7830()
+    else:
+        print("No correct I2C address found, \n"
+            "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
+            "Program Exit. \n")
+        exit(-1)
+        
+def loop():
+    while True:
+        value = ADC.analogRead(0)    # read the ADC value of channel 0
+        voltage = value / 255.0 * 3.3  # calculate the voltage value
+        print(f'ADC Value: {value} \tVoltage: {voltage:.2f}')
+        time.sleep(0.1)
+        
+        possible_values = [(3.27/4),(3.27/2), (3.27*.75),(3.27*.95)] 
+        
+        for i  in range(len(possible_values)):
+            if voltage > possible_values[i]:
+                ledPins[i].on()
+        
+        for i in range(len(possible_values)):
+            if voltage <= possible_values[i]:
+                ledPins[i].off()
+
+def destroy():
+    global LEDRED,LEDGREEN, LEDBLUE, LEDYELLOW
+    ADC.close()
+    # Release resources
+    LEDRED.close()
+    LEDGREEN.close()
+    
+if __name__ == '__main__':   # Program entrance
+    print ('Program is starting ... ')
+    try:
+        setup()
+        loop()
+    except KeyboardInterrupt: # Press ctrl-c to end the program.
+        destroy()
+        
+    
