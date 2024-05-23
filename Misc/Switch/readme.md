@@ -10,4 +10,6 @@
 
 ## Example Circuit
 
-![1000008120](https://github.com/SH-NicholasPage/IT101-BreadboardCode/assets/110427598/98be7aff-72c2-40ed-ab72-24f8eec4c977)
+![1000008123](https://github.com/SH-NicholasPage/IT101-BreadboardCode/assets/110427598/751d8f57-ef16-4628-a7d5-26e25d32d0c2)
+
+![1000008120](https://github.com/SH-NicholasPage/IT101-BreadboardCode/assets/110427598/32fd503a-49db-4ebf-8997-1845a2e0281f)
