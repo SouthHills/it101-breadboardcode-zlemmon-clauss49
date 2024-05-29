@@ -44,8 +44,12 @@ def loop():
         voltage = value / 255.0 * 3.3        # calculate voltage
         Rt = 10 * voltage / (3.3 - voltage)    # calculate value for potentiometer
         
+        #Making sure the program doesn't crash when the potentiometer is set to 0
+        Rt= max(Rt,1)
+        
         tempK = 1/(1/(273.15 + 25) + math.log(Rt/10)/3950.0) # calculate temperature (Kelvin)
         #I'd like to make it so the maximal potentiometer values don't break the program
+        
         
         tempC = tempK - 273.15        # calculate temperature (Celsius)
         tempF = tempC * 1.8 + 32
