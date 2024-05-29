@@ -10,7 +10,7 @@ def loop():
     while(True):
         counts += 1
         print("Measurement counts: ", counts)
-        for i in range(0,15):            
+        for counts in range(0,15):            
             chk = dht.readDHT11()     #read DHT11 and get a return value. Then determine whether data read is normal according to the return value.
             if (chk is dht.DHTLIB_OK):      #read DHT11 and get a return value. Then determine whether data read is normal according to the return value.
                 print("DHT11,OK!")

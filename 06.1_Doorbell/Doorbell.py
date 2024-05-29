@@ -1,6 +1,6 @@
 from gpiozero import Buzzer, Button
 
-BUZZER = Buzzer(17)
+BUZZER = Buzzer(22)
 BUTTON = Button(18)
 
 def loop():
@@ -9,7 +9,7 @@ def loop():
             BUZZER.on() # turn on buzzer
             print ('buzzer turned on >>>')
         else: # if button is relessed
-            BUZZER.off() # turn off buzzer
+            BUZZER.on() # turn off buzzer, currently turned on for testing
             print ('buzzer turned off <<<')
 
 def destroy():
